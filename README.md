@@ -1,19 +1,16 @@
 # Inventory Management System
 
-A web-based inventory management system built
-using Python, Flask, and MySQL.
+A web-based inventory management system built using Python, Flask, and MySQL.
 
 ## Features
 
 - Add, edit, and delete products.
-- Search products.
+- Search and manage products.
 - Manage incoming stock movements.
 - Manage outgoing stock movements.
-- Automatic stock quantity updates.
-- Prevent outgoing quantities exceeding available stock.
-- Archive and restore products.
+- Track inventory quantities.
 - View stock movement history.
-- User-friendly interface.
+- Manage archived products.
 
 ## Technologies Used
 
@@ -22,11 +19,35 @@ using Python, Flask, and MySQL.
 - MySQL
 - HTML
 - CSS
-- Bootstrap (if used)
+- Bootstrap
 
-## Database
+## Installation
 
-MySQL database: inventory_db
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/abdulrahmanAlalharbi/inventory-python.git
+   ```
+
+2. Navigate to the project folder:
+
+   ```bash
+   cd inventory-python
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Configure your environment variables in a `.env` file.
+
+5. Run the application:
+
+   ```bash
+   python main.py
+   ```
 
 ## Developer
 
