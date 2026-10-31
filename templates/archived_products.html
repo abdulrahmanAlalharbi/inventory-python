@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنتجات المؤرشفة</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<main>
+    <section>
+        <h1>المنتجات المؤرشفة</h1>
+        <p>إدارة المنتجات المحذوفة من قائمة المنتجات النشطة</p>
+
+        <a href="/">العودة للمخزون</a>
+
+        <table border="1">
+            <tr>
+                <th>رقم المنتج</th>
+                <th>اسم المنتج</th>
+                <th>الكمية</th>
+                <th>سعر الوحدة</th>
+                <th>الاجراء</th>
+            </tr>
+
+            {% for product in products %}
+            <tr>
+                <td>{{ product[0] }}</td>
+                <td>{{ product[1] }}</td>
+                <td>{{ product[2] }}</td>
+                <td>{{ product[3] }}</td>
+                <td>
+     <form action="{{ url_for('restore_product', product_id=product[0]) }}"
+          method="POST"
+          onsubmit="return confirm('هل تريد استعادة هذا المنتج؟');">
+
+        <button type="submit">استعادة</button>
+
+    </form>
+</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">لا توجد منتجات مؤرشفة</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+</main>
+
+</body>
+</html>

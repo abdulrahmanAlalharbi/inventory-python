@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعديل المنتج</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <main>
+        <section>
+            <h1>تعديل المنتج</h1>
+            <p>عدّل بيانات المنتج ثم اضغط حفظ التعديلات.</p>
+
+            <form method="POST">
+                <label for="products_Name">اسم المنتج</label><br>
+                <input
+                    type="text"
+                    id="products_Name"
+                    name="products_Name"
+                    value="{{ product[1] }}"
+                    required
+                ><br><br>
+
+               
+
+                <label for="unit_price">سعر الوحدة</label><br>
+                <input
+                    type="number"
+                    id="unit_price"
+                    name="unit_price"
+                    value="{{ product[3] }}"
+                    min="0"
+                    step="0.01"
+                    required
+                ><br><br>
+
+                <button type="submit">حفظ التعديلات</button>
+                <a href="/">العودة للمخزون</a>
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>

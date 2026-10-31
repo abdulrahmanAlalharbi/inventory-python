@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المخزون</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+
+<h1>نظام ادارة المخزون</h1>
+<p>مرحبأ بك في لوحة ادارة المخزون</p>
+</header>
+
+<main>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+
+        {% if category == 'error' %}
+        <div class="modal-overlay" id="stockErrorModal">
+            <div class="modal-box">
+                <div class="modal-icon">⚠️</div>
+
+                <h2>تنبيه: كمية غير كافية!</h2>
+
+                <p>{{ message }}</p>
+
+                <button onclick="closeStockError()">
+                    حسناً، فهمت
+                </button>
+            </div>
+        </div>
+
+        {% else %}
+        <div class="alert {{ category }}">
+            {{ message }}
+        </div>
+        {% endif %}
+
+    {% endfor %}
+{% endif %}
+{% endwith %}
+<section>
+
+<h2>المنتجات</h2>
+<p>ادارة المنتجات ومتابعة الكميات المتوفرة في المخزون</p>
+<button type="button" onclick="document.getElementById('productForm').hidden=false">اضافة منتج</button>
+
+<form id="productForm" action="/add_product" method="POST" hidden>
+    
+<h3>اضافة منتج جديد</h3>
+
+<label for="products_Name">أسم المنتج</label><br>
+<input type="text" id="products_Name" name="products_Name" required>
+
+<label for="quantity">الكمية</label><br>
+<input type="number" id="quantity" name="quantity" min="0" required>
+
+<label for="unit_price">سعر الوحدة</label><br>
+<input type="number" id="unit_price" name="unit_price" min="0" step="0.01" required>
+
+<button type="submit">احفظ المنتج</button><br>
+
+
+</form>
+
+
+</section>
+<section>
+<h2>المنتجات الموجودة في المخزون</h2>
+<form method="GET" action="/">
+    <input
+        type="text"
+        name="search"
+        placeholder="ابحث باسم المنتج أو رقمه..."
+        value="{{ search }}"
+    >
+    <button type="submit">بحث</button>
+    <a href="/">عرض جميع المنتجات</a>
+</form>
+
+<table border="1">
+    <tr>
+
+<th>رقم المنتج</th>
+<th>اسم المنتج</th>
+<th>الكمية</th>
+<th>سعر الوحدة</th>
+
+{% for product in products %}
+<tr>
+    <td>{{ product[0] }}</td>
+    <td>{{ product[1] }}</td>
+    <td>{{ product[4] }}</td>
+    <td>{{ product[3] }}</td>
+  <td>
+    <div class="action-buttons">
+
+        <a href="{{ url_for('edit_product', product_id=product[0]) }}"
+           class="action-btn edit-btn">
+            تعديل
+        </a>
+
+        <form action="{{ url_for('delete_product', product_id=product[0]) }}"
+              method="POST"
+              onsubmit="return confirm('هل أنت متأكد من حذف هذا المنتج؟');">
+
+            <button type="submit" class="action-btn delete-btn">
+                حذف
+            </button>
+        </form>
+
+        <form action="{{ url_for('archive_product', product_id=product[0]) }}"
+              method="POST"
+              onsubmit="return confirm('هل تريد أرشفة هذا المنتج؟');">
+
+            <button type="submit" class="action-btn archive-btn">
+                أرشفة
+            </button>
+        </form>
+
+    </div>
+</td>
+{% endfor %}
+
+</tr>
+</table>
+</section>
+<a href="{{ url_for('archived_products') }}">
+    <button type="button">المنتجات المؤرشفة</button>
+</a>
+
+<a href="{{ url_for('movement_history') }}">
+    <button type="button">سجل حركات المخزون</button>
+</a>
+<section>
+    <h2>تسجيل حركة مخزون</h2>
+
+    <form action="/stock_movement" method="POST">
+
+        <label>المنتج:</label>
+        <select name="product_id" required>
+            {% for product in products %}
+            <option value="{{ product[0] }}">
+                {{ product[1] }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>نوع الحركة:</label>
+        <select name="movement_type" required>
+            <option value="IN">وارد</option>
+            <option value="OUT">صادر</option>
+        </select>
+
+        <label>الكمية:</label>
+        <input
+            type="number"
+            name="quantity"
+            min="1"
+            required
+        >
+
+        <button type="submit">حفظ الحركة</button>
+
+    </form>
+</section>
+</main>
+<script>
+function closeStockError() {
+    const modal = document.getElementById("stockErrorModal");
+
+    if (modal) {
+        modal.remove();
+    }
+}
+</script>
+{% if request.args.get('stock_error') == '1' %}
+
+<div id="stockErrorModal" class="stock-modal">
+
+    <div class="stock-modal-content">
+
+        <h2>⚠️ تنبيه: كمية المخزون غير كافية</h2>
+
+        <p>
+            لا يمكن إتمام عملية الصرف!
+        </p>
+
+        <p>
+            الكمية المتوفرة:
+            <strong>{{ request.args.get('available') }}</strong>
+        </p>
+
+        <p>
+            الكمية المطلوبة:
+            <strong>{{ request.args.get('requested') }}</strong>
+        </p>
+
+        <p>يرجى تعديل الكمية المطلوبة والمحاولة مرة أخرى.</p>
+
+        <button onclick="closeStockError()">
+            حسناً، فهمت
+        </button>
+
+    </div>
+
+</div>
+
+{% endif %}
+</script>
+</body>
+</html>

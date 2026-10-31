@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>سجل حركات المخزون</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<main>
+    <section>
+        <h1>سجل حركات المخزون</h1>
+        <p>عرض جميع حركات الوارد والصادر</p>
+
+        <a href="/">العودة للمخزون</a>
+
+        <table border="1">
+            <tr>
+                <th>رقم الحركة</th>
+                <th>اسم المنتج</th>
+                <th>نوع الحركة</th>
+                <th>الكمية</th>
+                <th>التاريخ</th>
+            </tr>
+
+            {% for movement in movements %}
+            <tr>
+                <td>{{ movement[0] }}</td>
+                <td>{{ movement[1] }}</td>
+                <td>
+                    {% if movement[2] == 'IN' %}
+                        وارد
+                    {% else %}
+                        صادر
+                    {% endif %}
+                </td>
+                <td>{{ movement[3] }}</td>
+                <td>{{ movement[4] }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">لا توجد حركات مخزون</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+</main>
+
+</body>
+</html>

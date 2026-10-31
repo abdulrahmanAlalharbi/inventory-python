@@ -1,0 +1,217 @@
+/* إعدادات الصفحة الأساسية */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #263238;
+    direction: rtl;
+}
+
+/* المحتوى الرئيسي */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* العناوين */
+h1 {
+    color: #17365d;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #17365d;
+    margin-top: 30px;
+}
+
+/* الأقسام */
+section {
+    background-color: #ffffff;
+    padding: 24px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* جدول المنتجات */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+}
+
+th {
+    background-color: #17365d;
+    color: white;
+    padding: 14px;
+}
+
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover td {
+    background-color: #f0f5fa;
+}
+
+/* الأزرار */
+button {
+    background-color: #17365d;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover {
+    background-color: #24558a;
+}
+
+/* تناسب الجوال */
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    section {
+        padding: 14px;
+        overflow-x: auto;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+}
+/* نموذج إضافة المنتج */
+#productForm {
+    max-width: 400px;
+    margin: 15px auto 5px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+/* عنوان النموذج */
+#productForm h3 {
+    text-align: center;
+    margin: 0 0 20px;
+    color: #17365d;
+}
+
+/* تسميات الحقول */
+#productForm label {
+    display: block;
+    margin: 12px 0 6px;
+    text-align: right;
+    font-weight: bold;
+}
+
+/* حقول الإدخال */
+#productForm input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+/* زر حفظ المنتج */
+#productForm button {
+    margin-top: 20px;
+    padding: 10px 25px;
+}
+.stock-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.stock-modal-content {
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    text-align: center;
+    width: 90%;
+    max-width: 450px;
+    border-top: 6px solid #dc3545;
+}
+
+.stock-modal-content h2 {
+    color: #dc3545;
+}
+
+.stock-modal-content button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+/* تنسيق أزرار العمليات */
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.action-buttons form {
+    margin: 0;
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.edit-btn {
+    background-color: #2563eb;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc2626;
+    color: white;
+}
+
+.archive-btn {
+    background-color: #64748b;
+    color: white;
+}
+
+.action-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+}
