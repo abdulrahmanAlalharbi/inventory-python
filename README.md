@@ -52,3 +52,7 @@ A web-based inventory management system built using Python, Flask, and MySQL.
 ## Developer
 
 Abdulrahman Al-Harbi
+
+## Screenshots
+
+### Main Dashboard
